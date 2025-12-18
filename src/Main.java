@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[] args) {
 
+
         Animal a1 = new Animal("Leo", "Lion", 5);
         Animal a2 = new Animal("Max", "Tiger", 3);
 
