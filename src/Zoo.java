@@ -19,7 +19,7 @@ public class Zoo {
         this.animalCount = animalCount;
     }
 
-    @Override
+
     public String toString() {
         return "Zoo{name='" + zooName + "', animalCount=" + animalCount + "}";
     }
