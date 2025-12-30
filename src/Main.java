@@ -1,22 +1,27 @@
+import model.Animal; // Нужно добавить этот импорт
+import model.Lion;
+import model.Zoo;    // И этот импорт
+
 public class Main {
     public static void main(String[] args) {
+        // Теперь Main знает, что такое Zoo
+        Zoo zoo = new Zoo();
 
+        // Теперь Main знает, что такое Animal
+        Animal lion1 = new Lion("Simba", 5);
+        Animal lion2 = new Lion("Leo", 8);
 
-        Animal a1 = new Animal("Leo", "Lion", 5);
-        Animal a2 = new Animal("Max", "Tiger", 3);
+        zoo.addAnimal(lion1);
+        zoo.addAnimal(lion2);
 
-        Zookeeper zookeeper = new Zookeeper("John", 7);
-        Zoo zoo = new Zoo("City Zoo", 2);
+        zoo.sortAnimalsByName();
 
-        System.out.println(a1);
-        System.out.println(a2);
-        System.out.println(zookeeper);
-        System.out.println(zoo);
-
-        if (a1.getAge() > a2.getAge()) {
-            System.out.println(a1.getName() + " is older than " + a2.getName());
-        } else {
-            System.out.println(a2.getName() + " is older than " + a1.getName());
+        for (Animal animal : zoo.getAnimals()) {
+            System.out.println(animal);
+            System.out.println(animal.makeSound());
         }
+
+        System.out.println("Older than 6:");
+        System.out.println(zoo.findAnimalsOlderThan(6));
     }
 }
