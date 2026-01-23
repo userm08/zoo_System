@@ -1,27 +1,59 @@
-import model.Animal; // Нужно добавить этот импорт
-import model.Lion;
-import model.Zoo;    // И этот импорт
+import db.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Main {
     public static void main(String[] args) {
-        // Теперь Main знает, что такое Zoo
-        Zoo zoo = new Zoo();
 
-        // Теперь Main знает, что такое Animal
-        Animal lion1 = new Lion("Simba", 5);
-        Animal lion2 = new Lion("Leo", 8);
+        Connection conn = DatabaseConnection.connect();
 
-        zoo.addAnimal(lion1);
-        zoo.addAnimal(lion2);
-
-        zoo.sortAnimalsByName();
-
-        for (Animal animal : zoo.getAnimals()) {
-            System.out.println(animal);
-            System.out.println(animal.makeSound());
+        if (conn == null) {
+            System.out.println("Connection failed");
+            return;
         }
 
-        System.out.println("Older than 6:");
-        System.out.println(zoo.findAnimalsOlderThan(6));
+        System.out.println("Connected to database!");
+
+        try {
+            Statement stmt = conn.createStatement();
+
+            // ---------- READ ----------
+            System.out.println("READ:");
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT name, species, age FROM animal"
+            );
+
+            while (rs.next()) {
+                System.out.println(
+                        rs.getString("name") + " | " +
+                                rs.getString("species") + " | " +
+                                rs.getInt("age")
+                );
+            }
+
+            // ---------- WRITE (INSERT) ----------
+            int inserted = stmt.executeUpdate(
+                    "INSERT INTO animal (name, species, age, zoo_id) " +
+                            "VALUES ('Nala', 'Lion', 3, 1)"
+            );
+            System.out.println("Inserted rows: " + inserted);
+
+            // ---------- UPDATE ----------
+            int updated = stmt.executeUpdate(
+                    "UPDATE animal SET age = age + 1 WHERE name = 'Nala'"
+            );
+            System.out.println("Updated rows: " + updated);
+
+            // ---------- DELETE ----------
+            int deleted = stmt.executeUpdate(
+                    "DELETE FROM animal WHERE name = 'Nala'"
+            );
+            System.out.println("Deleted rows: " + deleted);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

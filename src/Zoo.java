@@ -1,34 +1,14 @@
-
-package model;
-import java.util.*;
-
 public class Zoo {
-    private List<Animal> animals = new ArrayList<>();
-    private List<Zookeeper> zookeepers = new ArrayList<>();
+    private int id;
+    private String name;
+    private String location;
 
-    public void addAnimal(Animal animal) {
-        animals.add(animal);
+    public Zoo(int id, String name, String location) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
     }
 
-    public void addZookeeper(Zookeeper zookeeper) {
-        zookeepers.add(zookeeper);
-    }
-
-    public List<Animal> findAnimalsOlderThan(int age) {
-        List<Animal> result = new ArrayList<>();
-        for (Animal a : animals) {
-            if (a.getAge() > age) {
-                result.add(a);
-            }
-        }
-        return result;
-    }
-
-    public void sortAnimalsByName() {
-        animals.sort(Comparator.comparing(Animal::getName));
-    }
-
-    public List<Animal> getAnimals() {
-        return animals;
-    }
+    // getters & setters
 }
+

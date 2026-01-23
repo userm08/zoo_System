@@ -2,8 +2,8 @@ package model;
 
 public class Lion extends Animal {
 
-    public Lion(String name, int age) {
-        super(name, age, "Lion");
+    public Lion(int id, String name, int age, int zooId) {
+        super(id, name, "Lion", age, zooId);
     }
 
     @Override
